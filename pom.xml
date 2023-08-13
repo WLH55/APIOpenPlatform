@@ -2,8 +2,8 @@
 <!-- @author <a href="https://github.com/liyupi">程序员鱼皮</a> -->
 <!-- @from <a href="https://yupi.icu">编程导航知识星球</a> -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -91,6 +91,19 @@
             <artifactId>easyexcel</artifactId>
             <version>3.1.1</version>
         </dependency>
+
+        <!--自己编写的模拟接口sdk-->
+<!--        <dependency>-->
+<!--            <groupId>com.wlh</groupId>-->
+<!--            <artifactId>wlhapi-client-sdk</artifactId>-->
+<!--            <version>0.0.1</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>com.wlhsdk</groupId>
+            <artifactId>wlhapi-client-sdk</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
         <!-- https://hutool.cn/docs/index.html#/-->
         <dependency>
             <groupId>cn.hutool</groupId>
