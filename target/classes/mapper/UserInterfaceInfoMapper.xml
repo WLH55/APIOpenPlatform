@@ -16,9 +16,15 @@
             <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
     </resultMap>
 
+
+
     <sql id="Base_Column_List">
         id,userId,interfaceInfoId,
         totalNum,leftNum,status,
         createTime,updateTime,isDelete
     </sql>
+    <select id="listTopInvokeInterfaceInfo" resultType="org.wlh.wlhcommon.model.entity.UserInterfaceInfo">
+        select interfaceInfoId, sum(totalNum) as totalNum from user_interface_info group by interfaceInfoId
+        order by totalNum desc limit #{limit};
+    </select>
 </mapper>

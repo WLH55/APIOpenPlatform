@@ -3,12 +3,12 @@ spring:
     gateway:
       routes:
         - id: name_api_route
-          uri: http://127.0.0.3:8123
+          uri: http://127.0.0.1:8123
           predicates:
             - Path=/api/**
           filters:
-            - AddRequestHeader=WLH,LH
-            - AddRequestParameter=name, mars
+#            - AddRequestHeader=WLH,LH
+#            - AddRequestParameter=name, mars
 
 server:
   address: 0.0.0.0

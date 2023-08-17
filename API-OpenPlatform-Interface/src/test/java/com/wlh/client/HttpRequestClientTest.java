@@ -1,6 +1,7 @@
 package com.wlh.client;
 
-import com.wlh.model.User;
+import com.wlh.wlhsdk.client.HttpRequestClient;
+import com.wlh.wlhsdk.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

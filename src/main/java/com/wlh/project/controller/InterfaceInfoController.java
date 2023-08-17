@@ -1,16 +1,16 @@
 package com.wlh.project.controller;
 
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;
 import com.wlh.project.annotation.AuthCheck;
 import com.wlh.project.common.*;
+import com.wlh.project.constant.CommonConstant;
 import com.wlh.project.constant.UserConstant;
 import com.wlh.project.exception.BusinessException;
 import com.wlh.project.exception.ThrowUtils;
-import com.wlh.project.model.dto.interfaceinfo.InterfaceInfoAddRequest;
-import com.wlh.project.model.dto.interfaceinfo.InterfaceInfoUpdateRequest;
-import com.wlh.project.model.dto.interfaceinfo.InterfaceInforIdRequest;
-import com.wlh.project.model.dto.interfaceinfo.InvokeInterfaceRequest;
+import com.wlh.project.model.dto.interfaceinfo.*;
 import com.wlh.project.model.enums.InterfaceInfoStatusEnum;
 import com.wlh.project.service.InterfaceInfoService;
 import com.wlh.project.service.UserService;
@@ -18,16 +18,14 @@ import com.wlh.wlhsdk.client.HttpRequestClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.wlh.wlhcommon.model.entity.InterfaceInfo;
 import org.wlh.wlhcommon.model.entity.User;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * 帖子接口
@@ -125,6 +123,71 @@ public class InterfaceInfoController {
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         return ResultUtils.success(result);
     }
+    /**
+     * 根据 id 获取
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/get")
+    public BaseResponse<InterfaceInfo> getInterfaceInfoById(long id) {
+        if (id <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        InterfaceInfo interfaceInfo = interfaceInfoService.getById(id);
+        return ResultUtils.success(interfaceInfo);
+    }
+
+    /**
+     * 获取列表（仅管理员可使用）
+     *
+     * @param interfaceInfoQueryRequest
+     * @return
+     */
+    @AuthCheck(mustRole = "admin")
+    @GetMapping("/list")
+    public BaseResponse<List<InterfaceInfo>> listInterfaceInfo(InterfaceInfoQueryRequest interfaceInfoQueryRequest) {
+        InterfaceInfo interfaceInfoQuery = new InterfaceInfo();
+        if (interfaceInfoQueryRequest != null) {
+            BeanUtils.copyProperties(interfaceInfoQueryRequest, interfaceInfoQuery);
+        }
+        QueryWrapper<InterfaceInfo> queryWrapper = new QueryWrapper<>(interfaceInfoQuery);
+        List<InterfaceInfo> interfaceInfoList = interfaceInfoService.list(queryWrapper);
+        return ResultUtils.success(interfaceInfoList);
+    }
+
+    /**
+     * 分页获取列表
+     *
+     * @param interfaceInfoQueryRequest
+     * @param request
+     * @return
+     */
+    @GetMapping("/list/page")
+    public BaseResponse<Page<InterfaceInfo>> listInterfaceInfoByPage(InterfaceInfoQueryRequest interfaceInfoQueryRequest, HttpServletRequest request) {
+        if (interfaceInfoQueryRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        InterfaceInfo interfaceInfoQuery = new InterfaceInfo();
+        BeanUtils.copyProperties(interfaceInfoQueryRequest, interfaceInfoQuery);
+        long current = interfaceInfoQueryRequest.getCurrent();
+        long size = interfaceInfoQueryRequest.getPageSize();
+        String sortField = interfaceInfoQueryRequest.getSortField();
+        String sortOrder = interfaceInfoQueryRequest.getSortOrder();
+        String description = interfaceInfoQuery.getDescription();
+        // description 需支持模糊搜索
+        interfaceInfoQuery.setDescription(null);
+        // 限制爬虫
+        if (size > 50) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        QueryWrapper<InterfaceInfo> queryWrapper = new QueryWrapper<>(interfaceInfoQuery);
+        queryWrapper.like(StringUtils.isNotBlank(description), "description", description);
+        queryWrapper.orderBy(StringUtils.isNotBlank(sortField),
+                sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
+        Page<InterfaceInfo> interfaceInfoPage = interfaceInfoService.page(new Page<>(current, size), queryWrapper);
+        return ResultUtils.success(interfaceInfoPage);
+    }
 
 
 
@@ -151,8 +214,8 @@ public class InterfaceInfoController {
 // 判断接口是否能使用
 // TODO 根据测试地址来调用
 // 这里我先用固定的方法进行测试，后面来改
-        com.wlhsdk.model.User user = new com.wlhsdk.model.User();
-        user.setName("丽洪");
+        com.wlh.wlhsdk.model.User user = new com.wlh.wlhsdk.model.User();
+        user.setUsername("丽洪");
         String name = httpRequestClient.getNameByPostWithJson(user);
         if (StringUtils.isBlank(name)) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR);
@@ -225,7 +288,7 @@ public class InterfaceInfoController {
         HttpRequestClient httpRequestClient1 = new HttpRequestClient(accessKey, secretKey);
         //先写死请求
         String userRequestParams = invokeInterfaceRequest.getRequestParams();
-        com.wlhsdk.model.User user = JSONUtil.toBean(userRequestParams, com.wlhsdk.model.User.class);
+        com.wlh.wlhsdk.model.User user = JSONUtil.toBean(userRequestParams, com.wlh.wlhsdk.model.User.class);
         String result = httpRequestClient1.getNameByPostWithJson(user);
         return ResultUtils.success(result);
 
