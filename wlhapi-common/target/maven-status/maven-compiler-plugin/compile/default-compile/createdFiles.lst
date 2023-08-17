@@ -1,0 +1,12 @@
+org\wlh\wlhcommon\model\enums\InterfaceInfoStatusEnum.class
+org\wlh\wlhcommon\model\vo\UserVO.class
+org\wlh\wlhcommon\model\entity\InterfaceInfo.class
+org\wlh\wlhcommon\service\InnerUserService.class
+org\wlh\wlhcommon\model\entity\UserInterfaceInfo.class
+org\wlh\wlhcommon\service\InnerInterfaceInfoService.class
+org\wlh\wlhcommon\model\vo\PostVO.class
+org\wlh\wlhcommon\model\enums\PostReviewStatusEnum.class
+org\wlh\wlhcommon\model\enums\PostGenderEnum.class
+org\wlh\wlhcommon\service\InnerUserInterfaceInfoService.class
+org\wlh\wlhcommon\model\entity\User.class
+org\wlh\wlhcommon\model\entity\Post.class

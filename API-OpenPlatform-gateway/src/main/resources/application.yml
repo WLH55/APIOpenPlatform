@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: name_api_route
+          uri: http://127.0.0.3:8123
+          predicates:
+            - Path=/api/**
+          filters:
+            - AddRequestHeader=WLH,LH
+            - AddRequestParameter=name, mars
+
+server:
+  address: 0.0.0.0
+  port: 8098
+
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+dubbo:
+  application:
+    name: dubbo-api-platform-backend-provider
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848

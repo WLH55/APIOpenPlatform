@@ -1,0 +1,9 @@
+server:
+  port: 8123
+  servlet:
+    context-path: /api
+wlh:
+  api:
+    client:
+      access-key: "cli_c5a98d0387a6b2d82dd8f31b51556cc8"
+      secret-key: "732b92831fd6ffff09396918239c8aa3"
