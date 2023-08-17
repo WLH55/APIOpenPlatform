@@ -1,6 +1,6 @@
 package com.wlh;
 
-import com.wlh.client.HttpRequestClient;
+import com.wlh.wlhsdk.client.HttpRequestClient;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

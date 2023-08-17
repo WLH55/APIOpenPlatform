@@ -1,9 +1,0 @@
-server:
-  port: 8123
-  servlet:
-    context-path: /api
-wlh:
-  api:
-    client:
-      access-key: "罗湘"
-      secret-key: "abc"

@@ -2,21 +2,28 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="APIOpenPlatform" />
+        <module name="wlhapi-common" />
+        <module name="wlhapi-backend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="API-OpenPlatform-backend" target="1.8" />
+      <module name="APIOpenPlatform" target="1.8" />
       <module name="springboot-init" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="API-OpenPlatform-backend" options="-parameters" />
       <module name="APIOpenPlatform" options="-parameters" />
       <module name="springboot-init" options="-parameters" />
+      <module name="wlhapi-backend" options="-parameters" />
+      <module name="wlhapi-common" options="-parameters" />
     </option>
   </component>
 </project>

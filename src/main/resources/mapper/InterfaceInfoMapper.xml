@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.WLH.springbootinit.mapper.InterfaceInfoMapper">
+<mapper namespace="com.wlh.project.mapper.InterfaceInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.WLH.springbootinit.model.entity.InterfaceInfo">
+    <resultMap id="BaseResultMap" type="org.wlh.wlhcommon.model.entity.InterfaceInfo">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="description" column="description" jdbcType="VARCHAR"/>
@@ -18,7 +18,7 @@
         <result property="userId" column="userId" jdbcType="BIGINT"/>
         <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
-        <result property="isDeleted" column="isDeleted" jdbcType="TINYINT"/>
+        <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -26,6 +26,6 @@
         ,name,description,
         url,requestHeader,responseHeader,requestParams,
         status,method,userId,
-        createTime,updateTime,isDeleted
+        createTime,updateTime,isDelete
     </sql>
 </mapper>
